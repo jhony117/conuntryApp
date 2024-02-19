@@ -9,7 +9,7 @@ export class CountriesService {
 
     private apiUrl:string = 'https://restcountries.com/v3.1';
 
-
+//! siempre que hagas uns subscripcion tienes que cerrarla 
   constructor(private http: HttpClient) { }
 
   private getCountriesRequest(url:string) : Observable<Country[]>{

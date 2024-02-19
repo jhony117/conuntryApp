@@ -1,14 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Subject, debounceTime } from 'rxjs';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subject, Subscription, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'shared-search-box',
   templateUrl: './search-box.component.html'
 })
-export class SearchBoxComponent implements OnInit {
+
+//? un ng-if o cambio de ruta llama a todos los metodos onDestroy
+export class SearchBoxComponent implements OnInit, OnDestroy {
+  
  
 
 private debouncer:Subject<string> = new Subject<string>();
+private debouncerSuscription?: Subscription;
   
       @Input()
     public placeholder:string = '';
@@ -24,7 +28,7 @@ private debouncer:Subject<string> = new Subject<string>();
 
 
  ngOnInit(): void {
-   this.debouncer
+ this.debouncerSuscription = this.debouncer
    .pipe(
     //?hasta que el observable deja de resivir cosas por un segundo continua el susbscribe
     debounceTime(400)
@@ -34,8 +38,10 @@ private debouncer:Subject<string> = new Subject<string>();
   })  
 }
 
-
-
+ngOnDestroy(): void {
+    // this.debouncer.unsubscribe()
+    this.debouncerSuscription?.unsubscribe();
+}
     SendSearch(term:string):void {
         this.onValue.emit(term)
     }
