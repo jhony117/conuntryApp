@@ -1,9 +1,11 @@
+<!-- (keyup.enter)="SendSearch(txtInput.value)"" -->
+
 <input
  type="text"
  [placeholder]="placeholder"
   class="form-control"
+  (keyup)="onKeyPress(txtInput.value)"
   #txtInput
-  (keyup.enter)="SendSearch(txtInput.value)"
   >
 
 

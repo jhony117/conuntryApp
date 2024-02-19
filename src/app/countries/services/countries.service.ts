@@ -21,7 +21,7 @@ export class CountriesService {
        return of([])
      
       }),
-  delay(2000)
+  // delay(2000)
    );
 
   }
