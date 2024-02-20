@@ -14,7 +14,7 @@ export class CountryPageComponent implements OnInit{
 
 
     public country?: Country;
-   
+ 
 
   constructor(private actvatedRoute:ActivatedRoute,
               private conuntryService:CountriesService,

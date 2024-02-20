@@ -12,6 +12,7 @@ export class ByCountryPageComponent implements OnInit{
   public countries :Country[] = [] ;
 
   public initialValue:string = '';
+  public isLoading:boolean = false;
 
   constructor(private countryService:CountriesService) {}
 
@@ -24,9 +25,11 @@ export class ByCountryPageComponent implements OnInit{
 
 
    searchByCountry(term : string) {
+    this.isLoading = true;
      this.countryService.searchCountry(term)
      .subscribe(countries => {
       this.countries = countries;
+      this.isLoading =false;
      })
    }
 

@@ -20,8 +20,17 @@ export class CountriesService {
 
 //! siempre que hagas uns subscripcion tienes que cerrarla
   constructor(private http: HttpClient) {
+    this.LoadFromLocalStorage();
+  }
 
+  private saveToLocalStorage(){
+      localStorage.setItem('cacheStore', JSON.stringify(this.cacheStore));
+  }
 
+  private LoadFromLocalStorage(){
+      if (!localStorage.getItem('cacheStore')) return;
+
+      this.cacheStore = JSON.parse(localStorage.getItem('cacheStore')!);
   }
 
   private getCountriesRequest(url:string) : Observable<Country[]>{
@@ -56,7 +65,8 @@ export class CountriesService {
 
       return this.getCountriesRequest(`${this.apiUrl}/capital/${term}`)
       .pipe(//? el tap se ejecuta cuando se resive una valor del observable, no influye en este valor
-          tap(countries => this.cacheStore.byCapital = {term,countries})
+          tap(countries => this.cacheStore.byCapital = {term,countries}),
+          tap(() => this.saveToLocalStorage())
       );
   }
 
@@ -64,8 +74,9 @@ export class CountriesService {
 
 
       return this.getCountriesRequest(`${this.apiUrl}/name/${term}`)
-      .pipe( 
-          tap(countries => this.cacheStore.byCountries = {term,countries})
+      .pipe(
+          tap(countries => this.cacheStore.byCountries = {term,countries}),
+          tap(() => this.saveToLocalStorage())
       );
 
 
@@ -74,7 +85,8 @@ export class CountriesService {
 
      return this.getCountriesRequest( `${this.apiUrl}/region/${region}`)
      .pipe(
-          tap(countries => this.cacheStore.byRegion = {region,countries})
+          tap(countries => this.cacheStore.byRegion = {region,countries}),
+          tap(() => this.saveToLocalStorage())
       );
    }
 

@@ -15,22 +15,25 @@ export class ByRegionPageComponent implements OnInit {
   public selectedRegion?: Region;
   public initialValue:string = '';
   public countries:Country[] = [];
+  public isLoading:boolean = false;
 
   constructor(private countryService:CountriesService) {}
   ngOnInit(): void {
    this.countries = this.countryService.cacheStore.byRegion.countries;
    this.initialValue= this.countryService.cacheStore.byRegion.region;
+   this.selectedRegion= this.countryService.cacheStore.byRegion.region;
 
   }
 
 
 
     searchByRegion(term:Region) {
-
+      this.isLoading = true;
       this.selectedRegion= term;
          this.countryService.searchRegion(term).
          subscribe(countries => {
           this.countries = countries;
+          this.isLoading =false;
          });
     }
 }
