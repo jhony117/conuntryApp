@@ -8,12 +8,16 @@ import { Subject, Subscription, debounceTime } from 'rxjs';
 
 //? un ng-if o cambio de ruta llama a todos los metodos onDestroy
 export class SearchBoxComponent implements OnInit, OnDestroy {
-  
- 
+
+
 
 private debouncer:Subject<string> = new Subject<string>();
 private debouncerSuscription?: Subscription;
-  
+
+
+          @Input()
+        public initialValue:string = '';
+
       @Input()
     public placeholder:string = '';
 
@@ -26,6 +30,8 @@ private debouncerSuscription?: Subscription;
    @Output()
    public onDebounce:EventEmitter<string> = new EventEmitter<string>();
 
+  
+
 
  ngOnInit(): void {
  this.debouncerSuscription = this.debouncer
@@ -35,7 +41,7 @@ private debouncerSuscription?: Subscription;
    )
    .subscribe(value=>{
   this.onDebounce.emit(value);
-  })  
+  })
 }
 
 ngOnDestroy(): void {

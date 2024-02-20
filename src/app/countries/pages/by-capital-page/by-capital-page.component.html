@@ -7,7 +7,9 @@
       <shared-search-box
       (onValue)="searchByCapital($event)"
       (onDebounce)="searchByCapital($event)"
-       placeholder="Buscar por capital">
+       placeholder="Buscar por capital"
+       [initialValue]="initialValue"
+       >
       </shared-search-box>
   </div>
 </div>

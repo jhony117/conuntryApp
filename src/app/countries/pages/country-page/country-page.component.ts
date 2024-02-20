@@ -14,6 +14,7 @@ export class CountryPageComponent implements OnInit{
 
 
     public country?: Country;
+   
 
   constructor(private actvatedRoute:ActivatedRoute,
               private conuntryService:CountriesService,
@@ -23,7 +24,7 @@ export class CountryPageComponent implements OnInit{
 
 
   ngOnInit(): void {
-    
+
       this.actvatedRoute.params
       .pipe(
         switchMap(({id}) => this.conuntryService.searchCountryByAlphaCode(id) ),
@@ -32,11 +33,11 @@ export class CountryPageComponent implements OnInit{
         if(!country) return this.router.navigateByUrl('');
 
      return this.country= country;
- 
-        
+
+
       });
 
-     
+
   }
 
 
